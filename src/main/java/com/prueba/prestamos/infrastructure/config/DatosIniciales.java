@@ -34,10 +34,6 @@ public class DatosIniciales implements CommandLineRunner {
         usuarios.guardar(new Usuario(null, "Admin Admin", "admin@test.com", codificador.codificar("123"), Rol.ADMIN));
 
         prestamos.guardar(Prestamo.solicitar(usuario, new BigDecimal("1000"), 12));
-        Prestamo aprobado = Prestamo.solicitar(usuario, new BigDecimal("2000"), 6);
-        aprobado.aprobar();
-        prestamos.guardar(aprobado);
-        prestamos.guardar(Prestamo.solicitar(usuario, new BigDecimal("30000"), 24));
 
         log.info("Datos iniciales cargados: usuario@test.com / admin@test.com (password 123)");
     }

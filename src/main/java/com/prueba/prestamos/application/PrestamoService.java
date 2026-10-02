@@ -70,17 +70,6 @@ public class PrestamoService {
         return prestamos.guardar(prestamo);
     }
 
-    @Transactional
-    @CacheEvict(cacheNames = CACHE_PRESTAMOS_USUARIO, key = "#email")
-    public void cancelar(Long id, String email) {
-        Prestamo prestamo = buscar(id);
-        if (!prestamo.perteneceA(email)) {
-            throw new AccesoDenegadoException("No puede cancelar un préstamo de otro usuario");
-        }
-        prestamo.validarCancelable();
-        prestamos.eliminar(id);
-    }
-
     private Prestamo buscar(Long id) {
         return prestamos.buscarPorId(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Préstamo " + id + " no encontrado"));

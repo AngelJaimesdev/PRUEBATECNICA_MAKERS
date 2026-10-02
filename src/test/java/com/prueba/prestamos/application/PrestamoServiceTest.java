@@ -24,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/** Casos de uso con los puertos simulados (Mockito): se prueba la lógica sin BD ni Spring. */
 @ExtendWith(MockitoExtension.class)
 class PrestamoServiceTest {
 
@@ -104,14 +103,5 @@ class PrestamoServiceTest {
         when(prestamos.buscarPorId(1L)).thenReturn(Optional.of(prestamo(EstadoPrestamo.PENDIENTE)));
 
         assertThat(service.obtener(1L, "admin@test.com", true).getId()).isEqualTo(1L);
-    }
-
-    @Test
-    void usuarioNoPuedeCancelarPrestamoDeOtro() {
-        when(prestamos.buscarPorId(1L)).thenReturn(Optional.of(prestamo(EstadoPrestamo.PENDIENTE)));
-
-        assertThatThrownBy(() -> service.cancelar(1L, "otro@test.com"))
-                .isInstanceOf(AccesoDenegadoException.class);
-        verify(prestamos, never()).eliminar(any());
     }
 }

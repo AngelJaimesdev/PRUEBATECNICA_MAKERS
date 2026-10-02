@@ -47,12 +47,6 @@ public class Prestamo implements Serializable {
         decidir(EstadoPrestamo.RECHAZADO);
     }
 
-    public void validarCancelable() {
-        if (estado != EstadoPrestamo.PENDIENTE) {
-            throw new ReglaNegocioException("Solo se pueden cancelar préstamos pendientes. Estado actual: " + estado);
-        }
-    }
-
     public boolean perteneceA(String email) {
         return usuarioEmail != null && usuarioEmail.equalsIgnoreCase(email);
     }

@@ -52,11 +52,6 @@ public class PrestamoPersistenceAdapter implements PrestamoRepositoryPort {
         return repository.existsByUsuarioId(usuarioId);
     }
 
-    @Override
-    public void eliminar(Long id) {
-        repository.deleteById(id);
-    }
-
     private static Prestamo aDominio(PrestamoEntity e) {
         return new Prestamo(e.getId(), e.getUsuario().getId(), e.getUsuario().getEmail(), e.getMonto(),
                 e.getPlazoMeses(), e.getEstado(), e.getFechaSolicitud(), e.getFechaRespuesta(), e.getVersion());

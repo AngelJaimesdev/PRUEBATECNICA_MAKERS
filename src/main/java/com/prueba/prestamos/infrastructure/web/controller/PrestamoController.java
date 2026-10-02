@@ -52,12 +52,6 @@ public class PrestamoController {
         return PrestamoResponse.from(service.rechazar(id));
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void cancelar(@PathVariable Long id, Authentication auth) {
-        service.cancelar(id, auth.getName());
-    }
-
     private static boolean esAdmin(Authentication auth) {
         return auth.getAuthorities().stream().anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
     }

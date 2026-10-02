@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-/** Pruebas unitarias puras del dominio: sin Spring, sin BD, milisegundos. */
 class PrestamoTest {
 
     private final Usuario usuario = new Usuario(1L, "Usuario", "usuario@test.com", "hash", Rol.USER);
@@ -63,13 +62,5 @@ class PrestamoTest {
         prestamo.aprobar();
 
         assertThatThrownBy(prestamo::rechazar).isInstanceOf(ReglaNegocioException.class);
-    }
-
-    @Test
-    void soloSeCancelaUnPrestamoPendiente() {
-        Prestamo prestamo = Prestamo.solicitar(usuario, new BigDecimal("5000"), 12);
-        prestamo.aprobar();
-
-        assertThatThrownBy(prestamo::validarCancelable).isInstanceOf(ReglaNegocioException.class);
     }
 }

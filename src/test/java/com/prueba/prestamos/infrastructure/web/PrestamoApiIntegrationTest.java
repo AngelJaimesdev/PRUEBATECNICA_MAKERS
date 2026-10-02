@@ -18,10 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Integración: levanta la aplicación completa (seguridad JWT real, H2, caché) y prueba por HTTP
- * con los usuarios del enunciado. Cada prueba crea su propio préstamo para no depender del orden.
- */
 @SpringBootTest
 @AutoConfigureMockMvc
 class PrestamoApiIntegrationTest {
@@ -94,6 +90,19 @@ class PrestamoApiIntegrationTest {
     }
 
     @Test
+    void usuarioNoPuedeCancelarUnaSolicitudEnviada() throws Exception {
+        String usuario = login("usuario@test.com");
+        long id = solicitar(usuario);
+
+        mockMvc.perform(delete("/api/prestamos/{id}", id).header("Authorization", usuario))
+                .andExpect(status().isMethodNotAllowed());
+
+        mockMvc.perform(get("/api/prestamos/{id}", id).header("Authorization", usuario))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.estado").value("PENDIENTE"));
+    }
+
+    @Test
     void adminApruebaYNoPuedeDecidirDosVeces() throws Exception {
         long id = solicitar(login("usuario@test.com"));
         String admin = login("admin@test.com");
@@ -126,14 +135,12 @@ class PrestamoApiIntegrationTest {
 
     @Test
     void consultaDeMisPrestamosSeSirveDesdeCache() {
-        prestamoService.solicitar("usuario@test.com", new BigDecimal("5000"), 12); // invalida la caché
+        prestamoService.solicitar("usuario@test.com", new BigDecimal("5000"), 12);
         clearInvocations(prestamoRepository);
 
         prestamoService.listarDeUsuario("usuario@test.com");
         prestamoService.listarDeUsuario("usuario@test.com");
         prestamoService.listarDeUsuario("usuario@test.com");
-
-        // 3 consultas, 1 sola ida a la base de datos
         verify(prestamoRepository, times(1)).buscarPorUsuarioEmail("usuario@test.com");
     }
 }

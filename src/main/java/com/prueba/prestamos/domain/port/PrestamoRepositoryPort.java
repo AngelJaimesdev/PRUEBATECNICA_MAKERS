@@ -20,6 +20,4 @@ public interface PrestamoRepositoryPort {
     List<Prestamo> buscarPorEstado(EstadoPrestamo estado);
 
     boolean existenDelUsuario(Long usuarioId);
-
-    void eliminar(Long id);
 }

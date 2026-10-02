@@ -36,13 +36,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(h -> h.frameOptions(f -> f.sameOrigin())) // necesario para la consola H2
+                .headers(h -> h.frameOptions(f -> f.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/prestamos/*/aprobar", "/api/prestamos/*/rechazar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/prestamos").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/prestamos").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/prestamos/*").hasRole("USER")
                         .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(o -> o

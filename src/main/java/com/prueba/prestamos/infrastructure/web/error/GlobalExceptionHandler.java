@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<RespuestaError> general(Exception ex) {
-        if (ex instanceof ErrorResponse errorSpring) { // 404 de ruta inexistente, 405 método no permitido, etc.
+        if (ex instanceof ErrorResponse errorSpring) {
             HttpStatusCode status = errorSpring.getStatusCode();
             return respuesta(HttpStatus.valueOf(status.value()), errorSpring.getBody().getDetail(), null);
         }
