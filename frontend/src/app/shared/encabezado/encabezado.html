@@ -1,0 +1,7 @@
+<header class="encabezado">
+  <div>
+    <h1>{{ saludo() }}, {{ auth.sesion()?.nombre }}</h1>
+    <p class="correo">{{ auth.sesion()?.email }}</p>
+  </div>
+  <button type="button" class="btn btn-primario" (click)="auth.logout()">Cerrar Sesión</button>
+</header>

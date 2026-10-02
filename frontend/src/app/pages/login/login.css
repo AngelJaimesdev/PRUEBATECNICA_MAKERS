@@ -1,0 +1,26 @@
+.pantalla {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.login {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+}
+
+.login h2 {
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+form {
+  margin-top: 8px;
+}
+
+.btn-bloque {
+  margin-top: 12px;
+  padding: 12px;
+}

@@ -1,0 +1,97 @@
+<main class="contenedor">
+  <app-encabezado saludo="Bienvenido" />
+
+  <nav class="pestanas">
+    <span class="pestana activa">Préstamos</span>
+  </nav>
+
+  @if (error()) {
+    <p class="alerta alerta-error" role="alert">{{ error() }}</p>
+  }
+  @if (exito()) {
+    <p class="alerta alerta-exito" role="status">{{ exito() }}</p>
+  }
+
+  <section class="tarjeta">
+    <h2>Solicitar Préstamo</h2>
+    <p class="subtitulo">Ingrese el monto que desea solicitar y el plazo</p>
+
+    <form [formGroup]="form" (ngSubmit)="solicitar()" novalidate>
+      <div class="fila">
+        <div class="campo">
+          <label for="monto">Monto</label>
+          <input
+            id="monto"
+            type="number"
+            formControlName="monto"
+            placeholder="Monto"
+            min="1000"
+            step="1000"
+            [class.invalido]="invalido('monto')"
+          />
+          @if (invalido('monto')) {
+            <small class="error-campo">
+              @if (form.controls.monto.hasError('required')) {
+                El monto es obligatorio
+              } @else if (form.controls.monto.hasError('min')) {
+                El monto mínimo es $1.000
+              } @else {
+                El monto máximo es $500.000.000
+              }
+            </small>
+          }
+        </div>
+
+        <div class="campo">
+          <label for="plazo">Plazo</label>
+          <select id="plazo" formControlName="plazoMeses" [class.invalido]="invalido('plazoMeses')">
+            @for (plazo of plazos; track plazo) {
+              <option [ngValue]="plazo">{{ plazo }} meses</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primario" [disabled]="enviando()">
+        {{ enviando() ? 'Enviando...' : 'Solicitar' }}
+      </button>
+    </form>
+  </section>
+
+  <section class="tarjeta">
+    <div class="titulo-lista">
+      <h2>Mis Préstamos</h2>
+      @if (pendientes() > 0) {
+        <span class="badge badge-pendiente">{{ pendientes() }} pendientes</span>
+      }
+    </div>
+
+    @if (cargando()) {
+      <p class="vacio">Cargando préstamos...</p>
+    } @else {
+      <ul class="lista">
+        @for (prestamo of prestamos(); track prestamo.id) {
+          <li class="item">
+            <div>
+              <p>
+                Monto:
+                <strong>{{ prestamo.monto | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</strong>
+                · {{ prestamo.plazoMeses }} meses
+              </p>
+              <p class="item-detalle">
+                Solicitado el {{ prestamo.fechaSolicitud | date: 'dd/MM/yyyy HH:mm' }}
+              </p>
+            </div>
+            <div class="item-acciones">
+              <span [class]="'badge badge-' + prestamo.estado.toLowerCase()">
+                Estado: {{ prestamo.estado }}
+              </span>
+            </div>
+          </li>
+        } @empty {
+          <li class="vacio">Aún no ha solicitado préstamos</li>
+        }
+      </ul>
+    }
+  </section>
+</main>

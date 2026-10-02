@@ -1,0 +1,46 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.filtro:hover {
+  background: var(--fondo);
+}
+
+.filtro.activo {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: #fff;
+}
+
+.contador {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.08);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.filtro.activo .contador {
+  background: rgb(255 255 255 / 0.2);
+}

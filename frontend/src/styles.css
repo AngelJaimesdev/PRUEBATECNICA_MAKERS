@@ -1,0 +1,257 @@
+:root {
+  --fondo: #f4f4f5;
+  --superficie: #ffffff;
+  --borde: #e4e4e7;
+  --texto: #18181b;
+  --texto-suave: #71717a;
+  --primario: #18181b;
+  --primario-hover: #3f3f46;
+  --peligro: #dc2626;
+  --peligro-hover: #b91c1c;
+  --radio: 12px;
+  --sombra: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.contenedor {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 24px;
+}
+
+.tarjeta + .tarjeta {
+  margin-top: 20px;
+}
+
+.tarjeta h2 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.subtitulo {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font: inherit;
+  background: var(--superficie);
+  color: var(--texto);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: var(--primario);
+  box-shadow: 0 0 0 3px rgb(24 24 27 / 0.12);
+}
+
+.campo .invalido {
+  border-color: var(--peligro);
+}
+
+.error-campo {
+  color: var(--peligro);
+  font-size: 0.8rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primario {
+  background: var(--primario);
+  color: #fff;
+}
+
+.btn-primario:hover:not(:disabled) {
+  background: var(--primario-hover);
+}
+
+.btn-peligro {
+  background: var(--peligro);
+  color: #fff;
+}
+
+.btn-peligro:hover:not(:disabled) {
+  background: var(--peligro-hover);
+}
+
+.btn-secundario {
+  background: transparent;
+  border-color: var(--borde);
+  color: var(--texto);
+}
+
+.btn-secundario:hover:not(:disabled) {
+  background: var(--fondo);
+}
+
+.btn-pequeno {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-bloque {
+  width: 100%;
+}
+
+.alerta {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+.alerta-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.alerta-exito {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.badge-pendiente {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.badge-aprobado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-rechazado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+
+.item:hover {
+  border-color: #d4d4d8;
+}
+
+.item-detalle {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+.item-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vacio {
+  color: var(--texto-suave);
+  text-align: center;
+  padding: 24px 0;
+  font-size: 0.9rem;
+}

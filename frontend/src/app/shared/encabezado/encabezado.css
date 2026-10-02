@@ -1,0 +1,19 @@
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.correo {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  margin-top: 2px;
+}

@@ -1,0 +1,78 @@
+<main class="contenedor">
+  <app-encabezado saludo="Hola" />
+
+  <section class="tarjeta">
+    <h2>Gestionar Solicitudes de Préstamos</h2>
+    <p class="subtitulo">Apruebe o rechace las solicitudes pendientes</p>
+
+    <div class="filtros" role="tablist">
+      @for (f of filtros; track f.valor) {
+        <button
+          type="button"
+          role="tab"
+          class="filtro"
+          [class.activo]="filtro() === f.valor"
+          [attr.aria-selected]="filtro() === f.valor"
+          (click)="filtro.set(f.valor)"
+        >
+          {{ f.etiqueta }} <span class="contador">{{ conteo()[f.valor] }}</span>
+        </button>
+      }
+    </div>
+
+    @if (error()) {
+      <p class="alerta alerta-error" role="alert">{{ error() }}</p>
+    }
+
+    @if (cargando()) {
+      <p class="vacio">Cargando solicitudes...</p>
+    } @else {
+      <ul class="lista">
+        @for (prestamo of visibles(); track prestamo.id) {
+          <li class="item">
+            <div>
+              <p>
+                Usuario: {{ prestamo.usuarioEmail }} - Monto:
+                <strong>{{ prestamo.monto | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</strong>
+                - Estado:
+                <span [class]="'badge badge-' + prestamo.estado.toLowerCase()">{{
+                  prestamo.estado
+                }}</span>
+              </p>
+              <p class="item-detalle">
+                {{ prestamo.plazoMeses }} meses · Solicitado el
+                {{ prestamo.fechaSolicitud | date: 'dd/MM/yyyy HH:mm' }}
+                @if (prestamo.fechaRespuesta) {
+                  · Respondido el {{ prestamo.fechaRespuesta | date: 'dd/MM/yyyy HH:mm' }}
+                }
+              </p>
+            </div>
+
+            @if (prestamo.estado === 'PENDIENTE') {
+              <div class="item-acciones">
+                <button
+                  type="button"
+                  class="btn btn-primario btn-pequeno"
+                  [disabled]="procesando() === prestamo.id"
+                  (click)="aprobar(prestamo)"
+                >
+                  Aprobar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-peligro btn-pequeno"
+                  [disabled]="procesando() === prestamo.id"
+                  (click)="rechazar(prestamo)"
+                >
+                  Rechazar
+                </button>
+              </div>
+            }
+          </li>
+        } @empty {
+          <li class="vacio">No hay solicitudes en esta categoría</li>
+        }
+      </ul>
+    }
+  </section>
+</main>

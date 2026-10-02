@@ -1,0 +1,39 @@
+.pestanas {
+  display: inline-flex;
+  padding: 4px;
+  margin-bottom: 20px;
+  background: #e4e4e7;
+  border-radius: 10px;
+}
+
+.pestana {
+  padding: 6px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pestana.activa {
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.titulo-lista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 560px) {
+  .fila {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
